@@ -1,0 +1,4 @@
+colorama
+openpyxl
+pyTelegramBotAPI
+pandas
