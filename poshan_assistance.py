@@ -19,11 +19,22 @@ bot = telebot.TeleBot(API_TOKEN)
 
 def send_welcome(message):
     chat_id = message.chat.id
-    welcome_message = "Welcome to the Copy Cat 🐈 Bot! 😊 Send me any text, and I'll copy it to your Pc clipboard.📋"
+    welcome_message = '''Welcome to Poshan Tracker Telegram Bot just past your data like this and it will store all your students data into an excel file example of student data ⬇️ 
+
+Om Prakash Sharma 
+77*****101 
+Hira Sharma 
+93 Cm 
+14 Kg 
+14th Of Nov 2023, 8:00 Am
+    '''
     bot.send_message(chat_id, welcome_message)
 
 def save_to_excel(data):
-    excel_file = 'Database\\poshana_data.xlsx'
+    if os.name == 'nt':
+        excel_file = 'poshana_data.xlsx'
+    else:
+        excel_file = '/data/data/com.termux/files/home/storage/downloads/poshana_data.xlsx'
     try:
         if os.path.exists(excel_file):
             workbook = load_workbook(excel_file)
@@ -69,8 +80,14 @@ def handle_text_message(message):
     except Exception as e:
         print(f"An error occurred: {e}")
 
+def clear_screen():
+    if os.name == 'nt':
+        os.system("cls")
+    else:
+        os.system("clear")
+
 def banner():
-    os.system("cls")
+    clear_screen()
     print(Fore.CYAN+'''
 
 ╭━━━╮╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╭━━━━╮╱╱╱╱╱╱╭╮╱╱╱╱╱╱╱╭━━━╮╱╱╱╱╱╱╱╱╱╭╮
@@ -79,15 +96,18 @@ def banner():
 ┃╭━━┫╭╮┃━━┫╭╮┃╭╮┃╭╮╮╱╱┃┃┃╭┫╭╮┃╭━┫╰╯┫┃━┫╭╯┃╰━╯┃━━┫━━╋┫━━┫┃┃╭╮┃╭╮┫╭━┫┃━┫
 ┃┃╱╱┃╰╯┣━━┃┃┃┃╭╮┃┃┃┃╱╱┃┃┃┃┃╭╮┃╰━┫╭╮┫┃━┫┃╱┃╭━╮┣━━┣━━┃┣━━┃╰┫╭╮┃┃┃┃╰━┫┃━┫
 ╰╯╱╱╰━━┻━━┻╯╰┻╯╰┻╯╰╯╱╱╰╯╰╯╰╯╰┻━━┻╯╰┻━━┻╯╱╰╯╱╰┻━━┻━━┻┻━━┻━┻╯╰┻╯╰┻━━┻━━╯  
-                                
+                             
                         ʕ•́ᴥ•̀ʔっ
 -------------------------------------------------------------
 This Telegram bot is designed for Poshana Traker data entry.
 Author - Rajkishor Patra
-version - 1
+version - 1.5
+
 -------------------------------------------------------------
           ''')
-
+    print(Fore.YELLOW+"all details are saved in poshana_data.xlsx \nif you are using termux it will saved in your Device Download folder")
+    print(Fore.MAGENTA+"waiting for Poshan Data🐈")
+    
 if __name__ == "__main__":
     while True:
         try:
